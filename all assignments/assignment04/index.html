@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 4 References -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Link to FontAwesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Simple JavaScript Demo</title>
+</head>
+<body>
+    <p>See the web developer console.</p>
+</body>
+<script>
+	"use strict";
+
+	/* some simple examples based on the material covered in class */
+	
+	console.log("hello world");
+
+    "use strict";
+
+    /* some simple examples based on the material covered in class */
+
+    console.log("hello world");
+
+    // the area of a square
+    var square_side_length = 69;
+    var square_area = square_side_length * square_side_length;
+    console.log('The area of a square with a side length of ' +
+    square_side_length + ' is ' + square_area );
+    // the perimeter of a square
+    var square_perimiter = square_side_length * 4;
+    console.log('The perimeter of a square with a side length of ' +
+    square_side_length + ' is ' + square_perimiter );
+
+    // convert Fahrenheit to Celsius
+    // The formula is: (32°F − 32) × 5/9 = 0°C
+    var fahrenheit = 70;
+    var celsius = (fahrenheit - 32) * 5/9;
+    console.log(fahrenheit + " degrees fahrenheit equals " + celsius.toFixed(2) + " degrees celsius.");
+
+    var name_one= 'Shaggy';
+    // fancier stuff - how long is the string?
+    console.log("How long is the string: " + name_one);
+    console.log(name_one.length);
+    // fancier stuff - changing a string to integer
+    var x = '1812';
+    console.log(parseInt(x));
+    var y = 'Elephant';
+    console.log(parseInt(y));
+    //fancier stuff - converting a number to string
+    var pi = 3.14159265359;
+    console.log(pi.toFixed(2));
+
+    var tri_base = 10;
+    var tri_height = 5;
+    var tri_area = tri_base * tri_height;
+    console.log("The area of a triangle with a base of " + tri_base + " and a height of " + tri_height + " is " + tri_area)
+
+    var bmiWeight = 170;
+    var bmiHeight = 70;
+    var bmi = 703 * bmiWeight/bmiHeight;
+    console.log("A person " + bmiHeight + "inches tall who weighs " + bmiWeight + " pounds has a BMI of " + bmi.toFixed(1));
+
+    var heightFeet = 5;
+    var heightInches = 2;
+    var heightTotalInch= ((heightFeet*12)+heightInches);
+    var weightPounds = 170;
+    var BMIv2 = 703 * (weightPounds / (heightTotalInch * heightTotalInch));
+    console.log("A person " + heightFeet + " feet " + heightInches + " inches tall who weighs " + weightPounds + " pounds has a BMI of: " + BMIv2.toFixed(1));
+</script>
+</html>

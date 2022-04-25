@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Loan Repayment Calculator</title>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<style>
+		.btn {border:1px solid black; 
+			padding:5px;
+			display:inline-block;
+		}
+			
+		.fancytext {
+			font-family: 'Courier New', Courier, monospace;
+			font-size: 1.5em;
+			color: green;
+			padding: 10px;
+		}
+			
+		.errortext {
+			font-size: 1.5em;
+			color: red;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Loan Repayment Calculator</h1>
+	
+		<p>Answer the following questions.</p>
+	
+		<p>Loan Amount: <input type="text" id="loanAmount"></p>
+		<p>Interest Rate: <p> <select name="rate" id="interestRate">
+			  <option value="0.01">0.01</option>
+			  <option value="0.02">0.02</option>
+			  <option value="0.03">0.03</option>
+			  <option value="0.04">0.04</option>
+			  <option value="0.05">0.05</option>
+			  <option value="0.06">0.06</option>
+			  <option value="0.07">0.07</option>
+			  <option value="0.08">0.08</option>
+			  <option value="0.09">0.09</option>
+			  <option value="0.1">0.1</option>
+			</select>
+		<p>Loan Duration (years): <select name="years" id="loanDurationYears">
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+			<option value="30">30</option>
+			<option value="35">35</option>
+			<option value="40">30</option>
+			<option value="45">45</option>
+			<option value="50">50</option>
+		  </select>
+	
+		<p>Click the button below to calcuate your monthy payment.</p>
+	
+		<p><input type="button" class="btn btn-primary" id="btn_calculate" value="Calculate"></p>
+		
+		<div id="textDisplayed1" class="fancytext"></div> 
+		<div id="textDisplayed2" class="errortext"></div> 
+	</div>
+	
+</body>
+<script>
+//
+// This program should take a loan amount, an interest rate, and a loan duration expressed as a 
+// number of years as input.
+// 
+// The code should then generate a text message with the following format: 
+// "Your estimated monthly payment is: $XXX.XX"  
+//
+// Here, obviously, $XXX.XX is a calculated value!
+//
+// The code should not allow bad / nonsensical input.  For example:
+//  - the interest rate must me in bounds (greater that zero and less than 100%)
+//  - the number of years must be a positive whole number.
+//
+// This start file contains a first attempt at creating such a calculator.  
+// However, there are 10 errors in the code, and you must find them.
+//
+// When you find an error, make a comment next to it.
+// Identify if you think the error was a "logic error" or a "syntax error" and then fix the error.
+// For example: 
+// let x = 100 / 0;  //logic error - you may not divide by zero.  the result is "undefined"
+// 
+//
+"use strict";
+
+function isNaturalNumber(x) {
+    if (isNaN(x)) {                    //syntax - used to be Nan
+        return false;
+    }
+
+    if ( x <= 0 || parseInt(x) != x) {
+        return false;
+    }
+
+    return true;
+}
+
+function convertYearsToMonths(y){
+    let m = y * 12;
+    return m
+}                                    //syntax - no closing bracket
+
+function getMonthlyRate(ar){
+    // take the annual interest rate expressed as a decimal, and divide by 12
+    // For example: 6% = .06
+    // .06 / 12 = .005
+    // the monthly rate is .005
+    return ar/ 12;
+}
+
+function power(base, exponent){
+    //this function performs exponentiation
+    //for example if base = 10, and exponent = 3
+    //this function will return 10 x 10 x 10 = 1000
+    //
+    //it doesn't deal with negative exponents... but those are not needed here.
+    //
+    let result = 1;
+    for (var i = 1; i <= exponent; i++){        //syntax - i was not defined
+        result = result * base;
+    }
+    return result;
+}
+
+function getMonthlyPaymentText(amount, rate, years){
+
+    let text_to_return = "";  //initializing this variable.  It will hold the text message to return.
+    let months = convertYearsToMonths(years); //will need to know the duration expressed as months
+    let monthlyRate = getMonthlyRate(rate)
+
+    //the following formula is CORRECT
+    let payment = amount / ( ( power( (1 + monthlyRate) , months) -1)  / ( monthlyRate*power((1+monthlyRate),months) ));
+    //there are bugs in this file... 
+    //but the above formula isn't one of them
+
+    text_to_return = "Your estimated monthly payment is: $" + payment.toFixed(2);
+    return text_to_return;
+}
+
+$('#btn_calculate').click(function(){
+    
+    //blank out any prior messages
+    $("#textDisplayed1").html("");  //this puts an empty string into the div
+    $("#textDisplayed2").html("");  //this puts an empty string into the div
+    
+    let amount = $("#loanAmount").val();
+    let rate = $("#interestRate").val();
+    let years = $("#loanDurationYears").val();
+
+    // error trapping here
+    if (amount == "" || !isNaturalNumber(amount)) {                                //syntax - only used one =
+        $("#textDisplayed2").html("You must provide a valid loan amount.")        //syntax - closing using ")
+        return; // putting "return" here causes the processing of the click event to stop!
+    }
+        
+    if (rate == "" || isNaN(rate) || rate <= 0 || rate > 1) 
+    {
+        $("#textDisplayed2").html("You must provide a valid annual rate.");
+        return; 
+    }
+        
+    if (years == "" || !isNaturalNumber(years)) {
+        $("#textDisplayed2").html("You must provide a valid loan duration in years.");
+        return;
+    }
+        
+    let theText = getMonthlyPaymentText(amount, rate, years);
+
+    $("#textDisplayed1").html(theText); //this puts theText into the inner HTML of the tag
+});
+
+</script>
+</html>
